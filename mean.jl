@@ -20,7 +20,7 @@ frames = unique(D[:, "frame_id"])
     (m -> m * (1/length(frames)))
 
 @polyvar x1[1:2] u1[1:2] x2[1:2] u2[1:2]
-d = 3
+d = 2
 k = let v1 = monomials([x1;u1],0:d);
     v2 = monomials([x2;u2],0:d);
     v = monomials([x;u],0:d);
@@ -63,7 +63,7 @@ for f0 in F0
         v'*inv(W + 1e-4I)*v
     end for m in ρ]
 
-    μT = integrate.(x1,ρT')
+    μT = integrate.(x1,ρT') / (N-1)
     fT = f0 + 3*10
     XT = filter(e -> e["frame_id"] == fT && e["track_id"] in collect(X0[:,"track_id"]), D)
 
