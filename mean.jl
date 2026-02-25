@@ -33,7 +33,7 @@ k21 = subs(k, ([x1;u1;x2;u2] .=> [x2;u2;x1;u1])...)
 k22 = subs(k, ([x1;u1;x2;u2] .=> [x2;u2;x2;u2])...)
 l = k11 + k12 + k21 + k22
 
-f0 = frames[1]
+f0 = Int(frames[1])
 X0 = filter(e -> e["frame_id"] == f0, D)
 N = size(X0,1)
 
@@ -64,7 +64,7 @@ end for m in ρ]
 fT = f0 + 3*10
 XT = filter(e -> e["frame_id"] == fT && e["track_id"] in collect(X0[:,"track_id"]), D)
 
-save("mean.pdf", Axis([
+save("mean-f$(f0).pdf", Axis([
     Plots.Image((x,y) -> sum(1/qi(x,y) for qi in q), (-1,1), (-1,1)),
     Plots.Quiver(
         D[1:50:end,"x"],    D[1:50:end,"y"],
