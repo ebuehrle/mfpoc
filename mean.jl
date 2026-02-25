@@ -20,7 +20,7 @@ frames = unique(D[:, "frame_id"])
     (m -> m * (1/length(frames)))
 
 @polyvar x1[1:2] u1[1:2] x2[1:2] u2[1:2]
-d = 2
+d = 3
 k = let v1 = monomials([x1;u1],0:d);
     v2 = monomials([x2;u2],0:d);
     v = monomials([x;u],0:d);
