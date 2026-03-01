@@ -15,7 +15,9 @@ M = XML.read("DR_DEU_Roundabout_OF.osm_xy", Node) |>
     (m -> filter(e -> e.tag == "way", m.children)) |>
     (m -> filter(e -> istype(e, "curbstone"), m)) .|>
     (w -> filter(e -> e.tag == "nd", w.children)) .|>
-    (w -> stack(N[n["ref"]] for n in w)) .|>
+    (w -> stack(N[n["ref"]] for n in w))
+
+M = M .|>
     (w -> w .- [1000, 1000]) .|>
     (w -> w ./ 20)
 
