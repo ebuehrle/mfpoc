@@ -98,6 +98,6 @@ for f0 in F0
         [Plots.Linear(vehicle(m...,5/20,2/20), style="red, no markers, solid") for m in eachcol(μT)];
         [Plots.Linear(vehicle(xt...,5/20,2/20), style="green, no markers, solid") for xt in eachrow(XT[:,["x","y","vx","vy"]]) .|> collect];
         [Plots.Linear(m, style="white, no markers, solid") for m in map_ways]
-    ], xmin=-1, xmax=1, ymin=-1, ymax=1))
+    ], xmin=-1, xmax=1, ymin=-1, ymax=1, xlabel="Easting (20\\,m)", ylabel="Northing (20\\,m)"))
 
 end
