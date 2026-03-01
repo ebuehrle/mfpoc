@@ -6,6 +6,7 @@ using MomentOpt
 using MosekTools
 using PGFPlots
 using XML
+include("vehicle.jl")
 
 istype(way, type) = any(
     e.tag == "tag" && e["k"] == "type" && e["v"] == type for e in way.children)
@@ -74,7 +75,7 @@ for f0 in F0
         @constraint p [i=1:N] Mom.(v2, ρ[i]) .== Mom.(v1, sum(ρ[j] for j=1:N if j != i)/(N-1))
     end
 
-    @objective p Min Mom(l,sum(ρ)/N^2)
+    @objective p Min Mom(l,sum(ρ)/N^2+sum(ρT))
     optimize!(p)
 
     q = [let v = monomials(x1, 0:d);
@@ -82,7 +83,7 @@ for f0 in F0
         v'*inv(W + 1e-4I)*v
     end for m in ρ]
 
-    μT = integrate.(x1,ρT') / (N-1)
+    μT = integrate.([x1;u1],ρT') / (N-1)
     fT = f0 + 3*10
     XT = filter(e -> e["frame_id"] == fT && e["track_id"] in collect(X0[:,"track_id"]), D)
 
@@ -93,9 +94,9 @@ for f0 in F0
             D[1:50:end,"vx"]/3, D[1:50:end,"vy"]/3,
             style="-stealth, no markers, blue",
         );
-        Plots.Scatter(X0[:,"x"], X0[:,"y"]);
-        Plots.Scatter(μT, style="mark=x, red");
-        Plots.Scatter(XT[:,"x"], XT[:,"y"], style="mark=x, green");
+        [Plots.Linear(vehicle(x0...,5/20,2/20), style="brown, no markers, solid") for x0 in eachrow(X0[:,["x","y","vx","vy"]]) .|> collect];
+        [Plots.Linear(vehicle(m...,5/20,2/20), style="red, no markers, solid") for m in eachcol(μT)];
+        [Plots.Linear(vehicle(xt...,5/20,2/20), style="green, no markers, solid") for xt in eachrow(XT[:,["x","y","vx","vy"]]) .|> collect];
         [Plots.Linear(m, style="white, no markers, solid") for m in map_ways]
     ], xmin=-1, xmax=1, ymin=-1, ymax=1))
 
