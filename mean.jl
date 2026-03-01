@@ -96,7 +96,7 @@ for f0 in F0
         Plots.Scatter(X0[:,"x"], X0[:,"y"]);
         Plots.Scatter(μT, style="mark=x, red");
         Plots.Scatter(XT[:,"x"], XT[:,"y"], style="mark=x, green");
-        [Plots.Linear(m, style="white, no markers") for m in map_ways]
+        [Plots.Linear(m, style="white, no markers, solid") for m in map_ways]
     ], xmin=-1, xmax=1, ymin=-1, ymax=1))
 
 end
