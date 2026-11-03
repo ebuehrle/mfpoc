@@ -1,62 +1,62 @@
-# julia --project mean.jl  1
-# julia --project mean.jl  2
-# julia --project mean.jl  3
-# julia --project mean.jl  4
-# julia --project mean.jl  5
-# julia --project mean.jl  6
-# julia --project mean.jl  7
-# julia --project mean.jl  8
-# julia --project mean.jl  9
-# julia --project mean.jl 10
-# julia --project mean.jl 11
-# julia --project mean.jl 12
-# julia --project mean.jl 13
-# julia --project mean.jl 14
-# julia --project mean.jl 15
-# julia --project mean.jl 16
-# julia --project mean.jl 17
-# julia --project mean.jl 18
-# julia --project mean.jl 19
-# julia --project mean.jl 20
-# julia --project mean.jl 21
-# julia --project mean.jl 22
-# julia --project mean.jl 23
-# julia --project mean.jl 24
-# julia --project mean.jl 25
-# julia --project mean.jl 26
-# julia --project mean.jl 27
-# julia --project mean.jl 28
-# julia --project mean.jl 29
-# julia --project mean.jl 30
-# julia --project mean.jl 31
-# julia --project mean.jl 32
-# julia --project mean.jl 33
-# julia --project mean.jl 34
-# julia --project mean.jl 35
-# julia --project mean.jl 36
-# julia --project mean.jl 37
-# julia --project mean.jl 38
-# julia --project mean.jl 39
-# julia --project mean.jl 40
-# julia --project mean.jl 41
-# julia --project mean.jl 42
-# julia --project mean.jl 43
-# julia --project mean.jl 44
-# julia --project mean.jl 45
-# julia --project mean.jl 46
-# julia --project mean.jl 47
-# julia --project mean.jl 48
-# julia --project mean.jl 49
-# julia --project mean.jl 50
-# julia --project mean.jl 51
-# julia --project mean.jl 52
-# julia --project mean.jl 53
-# julia --project mean.jl 54
-# julia --project mean.jl 55 #
-# julia --project mean.jl 56 #
-# julia --project mean.jl 57 #
-# julia --project mean.jl 58 #
-# julia --project mean.jl 59 #
+julia --project mean.jl  1
+julia --project mean.jl  2
+julia --project mean.jl  3
+julia --project mean.jl  4
+julia --project mean.jl  5
+julia --project mean.jl  6
+julia --project mean.jl  7
+julia --project mean.jl  8
+julia --project mean.jl  9
+julia --project mean.jl 10
+julia --project mean.jl 11
+julia --project mean.jl 12
+julia --project mean.jl 13
+julia --project mean.jl 14
+julia --project mean.jl 15
+julia --project mean.jl 16
+julia --project mean.jl 17
+julia --project mean.jl 18
+julia --project mean.jl 19
+julia --project mean.jl 20
+julia --project mean.jl 21
+julia --project mean.jl 22
+julia --project mean.jl 23
+julia --project mean.jl 24
+julia --project mean.jl 25
+julia --project mean.jl 26
+julia --project mean.jl 27
+julia --project mean.jl 28
+julia --project mean.jl 29
+julia --project mean.jl 30
+julia --project mean.jl 31
+julia --project mean.jl 32
+julia --project mean.jl 33
+julia --project mean.jl 34
+julia --project mean.jl 35
+julia --project mean.jl 36
+julia --project mean.jl 37
+julia --project mean.jl 38
+julia --project mean.jl 39
+julia --project mean.jl 40
+julia --project mean.jl 41
+julia --project mean.jl 42
+julia --project mean.jl 43
+julia --project mean.jl 44
+julia --project mean.jl 45
+julia --project mean.jl 46
+julia --project mean.jl 47
+julia --project mean.jl 48
+julia --project mean.jl 49
+julia --project mean.jl 50
+julia --project mean.jl 51
+julia --project mean.jl 52
+julia --project mean.jl 53
+julia --project mean.jl 54
+julia --project mean.jl 55
+julia --project mean.jl 56
+julia --project mean.jl 57
+julia --project mean.jl 58
+julia --project mean.jl 59
 julia --project mean.jl 60
 julia --project mean.jl 61
 julia --project mean.jl 62
