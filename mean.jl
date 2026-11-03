@@ -53,7 +53,9 @@ k21 = subs(k, ([x1;u1;x2;u2] .=> [x2;u2;x1;u1])...)
 k22 = subs(k, ([x1;u1;x2;u2] .=> [x2;u2;x2;u2])...)
 l = k11 + k12 + k21 + k22
 
-F0 = Int.(frames[1:10:100])
+F0 = Int.(frames[1:100])
+farg = parse(Int, ARGS[1])
+F0 = F0[farg:farg]
 
 for f0 in F0
 
