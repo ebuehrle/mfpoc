@@ -34,7 +34,7 @@ D = CSV.read("vehicle_tracks_000.csv", DataFrame) |>
     (d -> filter(e -> -1 <= e["y"] <= 1, d))
 
 @polyvar t x[1:2] u[1:2]
-frames = unique(D[:, "frame_id"])
+frames = sort(Int.(unique(D[:, "frame_id"])))
 σ = D[:,["x","y","vx","vy"]] |> eachrow .|> collect .|> 
     (s -> DiracMeasure([x;u],s)) |> sum |> 
     (m -> m * (1/length(frames)))
@@ -53,7 +53,7 @@ k21 = subs(k, ([x1;u1;x2;u2] .=> [x2;u2;x1;u1])...)
 k22 = subs(k, ([x1;u1;x2;u2] .=> [x2;u2;x2;u2])...)
 l = k11 + k12 + k21 + k22
 
-F0 = Int.(frames[1:100])
+F0 = frames[1:100]
 farg = parse(Int, ARGS[1])
 F0 = F0[farg:farg]
 
@@ -90,16 +90,16 @@ for f0 in F0
     XT = filter(e -> e["frame_id"] == fT && e["track_id"] in collect(X0[:,"track_id"]), D)
 
     save("mean-f$(f0).pdf", Axis([
-        Plots.Image((x,y) -> sum(1/qi(x,y) for qi in q), (-1,1), (-1,1), colorbar=false);
+        Plots.Image((x,y) -> sum(1/qi(x/20,y/20) for qi in q), (-20,20), (-20,20), colorbar=false);
         Plots.Quiver(
-            D[1:50:end,"x"],    D[1:50:end,"y"],
-            D[1:50:end,"vx"]/3, D[1:50:end,"vy"]/3,
+            D[1:50:end,"x"]*20,    D[1:50:end,"y"]*20,
+            D[1:50:end,"vx"]/3*20, D[1:50:end,"vy"]/3*20,
             style="-stealth, no markers, blue",
         );
-        [Plots.Linear(vehicle(x0...,5/20,2/20), style="brown, no markers, solid") for x0 in eachrow(X0[:,["x","y","vx","vy"]]) .|> collect];
-        [Plots.Linear(vehicle(m...,5/20,2/20), style="red, no markers, solid") for m in eachcol(μT)];
-        [Plots.Linear(vehicle(xt...,5/20,2/20), style="green, no markers, solid") for xt in eachrow(XT[:,["x","y","vx","vy"]]) .|> collect];
-        [Plots.Linear(m, style="white, no markers, solid") for m in map_ways]
-    ], xmin=-1, xmax=1, ymin=-1, ymax=1, xlabel="Easting (20\\,m)", ylabel="Northing (20\\,m)"))
+        [Plots.Linear(vehicle(20*x0...,5,2), style="brown, no markers, solid") for x0 in eachrow(X0[:,["x","y","vx","vy"]]) .|> collect];
+        [Plots.Linear(vehicle(20*m...,5,2), style="red, no markers, solid") for m in eachcol(μT)];
+        [Plots.Linear(vehicle(20*xt...,5,2), style="green, no markers, solid") for xt in eachrow(XT[:,["x","y","vx","vy"]]) .|> collect];
+        [Plots.Linear(m*20, style="white, no markers, solid") for m in map_ways]
+    ], xmin=-20, xmax=20, ymin=-20, ymax=20, xlabel="Easting (m)", ylabel="Northing (m)"))
 
 end
