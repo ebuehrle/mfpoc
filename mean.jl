@@ -90,7 +90,7 @@ for f0 in F0
     XT = filter(e -> e["frame_id"] == fT && e["track_id"] in collect(X0[:,"track_id"]), D)
 
     save("mean-f$(f0).pdf", Axis([
-        Plots.Image((x,y) -> sum(1/qi(x/20,y/20) for qi in q), (-20,20), (-20,20), colorbar=false);
+        Plots.Image((x,y) -> sum(1/qi(x/20,y/20) for qi in q), (-20,20), (-20,20));
         Plots.Quiver(
             D[1:50:end,"x"]*20,    D[1:50:end,"y"]*20,
             D[1:50:end,"vx"]/3*20, D[1:50:end,"vy"]/3*20,
@@ -100,6 +100,6 @@ for f0 in F0
         [Plots.Linear(vehicle(20*m...,5,2), style="red, no markers, solid") for m in eachcol(μT)];
         [Plots.Linear(vehicle(20*xt...,5,2), style="green, no markers, solid") for xt in eachrow(XT[:,["x","y","vx","vy"]]) .|> collect];
         [Plots.Linear(m*20, style="white, no markers, solid") for m in map_ways]
-    ], xmin=-20, xmax=20, ymin=-20, ymax=20, xlabel="Easting (m)", ylabel="Northing (m)"))
+    ], xmin=-20, xmax=20, ymin=-20, ymax=20, xlabel="Easting (m)", ylabel="Northing (m)", style="colorbar style={title=Density}"))
 
 end
