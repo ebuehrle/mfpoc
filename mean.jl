@@ -53,14 +53,17 @@ k21 = subs(k, ([x1;u1;x2;u2] .=> [x2;u2;x1;u1])...)
 k22 = subs(k, ([x1;u1;x2;u2] .=> [x2;u2;x2;u2])...)
 l = k11 + k12 + k21 + k22
 
-F0 = frames[1:100]
-farg = parse(Int, ARGS[1])
-F0 = F0[farg:farg]
+F0 = frames[350:end]
+# farg = parse(Int, ARGS[1])
+# F0 = F0[farg:farg]
 
 for f0 in F0
 
     X0 = filter(e -> e["frame_id"] == f0, D)
     N = size(X0,1)
+    if N < 2
+        continue
+    end
 
     p = GMPModel(Mosek.Optimizer)
     @variable p ρ[1:N]  Meas([t;x1;u1;x2;u2], support=@set([t;x1;u1;x2;u2]'*[t;x1;u1;x2;u2] <= 10))
