@@ -60,7 +60,7 @@ F0 = F0[farg:farg]
 for f0 in F0
 
     X0 = filter(e -> e["frame_id"] == f0, D)
-    X0[2,"y"] += 0.2
+    X0[1,"y"] += 0.2
     N = size(X0,1)
 
     p = GMPModel(Mosek.Optimizer)
