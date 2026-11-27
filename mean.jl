@@ -49,7 +49,31 @@ D002 = CSV.read("vehicle_tracks_002.csv", DataFrame) |>
     (d -> filter(e -> -1 <= e["x"] <= 1, d)) |>
     (d -> filter(e -> -1 <= e["y"] <= 1, d))
 
-D = vcat(D000, D001, D002)
+D003 = CSV.read("vehicle_tracks_003.csv", DataFrame) |>
+    (d -> d[:,["frame_id","track_id","x","y","vx","vy"]]) |>
+    (d -> d .+ [maximum(D002[:, "frame_id"]) maximum(D002[:, "track_id"]) 0 0 0 0]) |>
+    (d -> d .- [0 0 1000 1000 0 0]) |>
+    (d -> d ./ [1 1 25 25 25 25]) |>
+    (d -> filter(e -> -1 <= e["x"] <= 1, d)) |>
+    (d -> filter(e -> -1 <= e["y"] <= 1, d))
+
+D004 = CSV.read("vehicle_tracks_004.csv", DataFrame) |>
+    (d -> d[:,["frame_id","track_id","x","y","vx","vy"]]) |>
+    (d -> d .+ [maximum(D003[:, "frame_id"]) maximum(D003[:, "track_id"]) 0 0 0 0]) |>
+    (d -> d .- [0 0 1000 1000 0 0]) |>
+    (d -> d ./ [1 1 25 25 25 25]) |>
+    (d -> filter(e -> -1 <= e["x"] <= 1, d)) |>
+    (d -> filter(e -> -1 <= e["y"] <= 1, d))
+
+D005 = CSV.read("vehicle_tracks_005.csv", DataFrame) |>
+    (d -> d[:,["frame_id","track_id","x","y","vx","vy"]]) |>
+    (d -> d .+ [maximum(D004[:, "frame_id"]) maximum(D004[:, "track_id"]) 0 0 0 0]) |>
+    (d -> d .- [0 0 1000 1000 0 0]) |>
+    (d -> d ./ [1 1 25 25 25 25]) |>
+    (d -> filter(e -> -1 <= e["x"] <= 1, d)) |>
+    (d -> filter(e -> -1 <= e["y"] <= 1, d))
+
+D = vcat(D000, D001, D002, D003, D004, D005)
 
 @polyvar t x[1:2] u[1:2]
 frames = sort(Int.(unique(D[:, "frame_id"])))
@@ -113,8 +137,8 @@ for f0 in F0
     save("mean-f$(f0).pdf", Axis([
         Plots.Image((x,y) -> sum(1/qi(x/25,y/25) for qi in q), (-25,25), (-25,25));
         Plots.Quiver(
-            D[1:150:end,"x"]*25,    D[1:150:end,"y"]*25,
-            D[1:150:end,"vx"]/3*25, D[1:150:end,"vy"]/3*25,
+            D[1:300:end,"x"]*25,    D[1:300:end,"y"]*25,
+            D[1:300:end,"vx"]/3*25, D[1:300:end,"vy"]/3*25,
             style="-stealth, no markers, blue",
         );
         [Plots.Linear(vehicle(25*x0...,5,2), style="brown, no markers, solid") for x0 in eachrow(X0[:,["x","y","vx","vy"]]) .|> collect];
