@@ -26,12 +26,30 @@ map_ways = XML.read("DR_DEU_Roundabout_OF.osm_xy", Node) |>
     (w -> w .- [1000, 1000]) .|>
     (w -> w ./ 25)
 
-D = CSV.read("vehicle_tracks_000.csv", DataFrame) |>
+D000 = CSV.read("vehicle_tracks_000.csv", DataFrame) |>
     (d -> d[:,["frame_id","track_id","x","y","vx","vy"]]) |>
     (d -> d .- [0 0 1000 1000 0 0]) |>
     (d -> d ./ [1 1 25 25 25 25]) |>
     (d -> filter(e -> -1 <= e["x"] <= 1, d)) |>
     (d -> filter(e -> -1 <= e["y"] <= 1, d))
+
+D001 = CSV.read("vehicle_tracks_001.csv", DataFrame) |>
+    (d -> d[:,["frame_id","track_id","x","y","vx","vy"]]) |>
+    (d -> d .+ [maximum(D000[:, "frame_id"]) maximum(D000[:, "track_id"]) 0 0 0 0]) |>
+    (d -> d .- [0 0 1000 1000 0 0]) |>
+    (d -> d ./ [1 1 25 25 25 25]) |>
+    (d -> filter(e -> -1 <= e["x"] <= 1, d)) |>
+    (d -> filter(e -> -1 <= e["y"] <= 1, d))
+
+D002 = CSV.read("vehicle_tracks_002.csv", DataFrame) |>
+    (d -> d[:,["frame_id","track_id","x","y","vx","vy"]]) |>
+    (d -> d .+ [maximum(D001[:, "frame_id"]) maximum(D001[:, "track_id"]) 0 0 0 0]) |>
+    (d -> d .- [0 0 1000 1000 0 0]) |>
+    (d -> d ./ [1 1 25 25 25 25]) |>
+    (d -> filter(e -> -1 <= e["x"] <= 1, d)) |>
+    (d -> filter(e -> -1 <= e["y"] <= 1, d))
+
+D = vcat(D000, D001, D002)
 
 @polyvar t x[1:2] u[1:2]
 frames = sort(Int.(unique(D[:, "frame_id"])))
