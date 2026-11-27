@@ -63,7 +63,8 @@ k = let v1 = monomials([x1;u1],0:d);
     v2 = monomials([x2;u2],0:d);
     v = monomials([x;u],0:d);
     W = integrate.(v*v',[σ]);
-    v1'*inv(W+1e-4I)*v2
+    m = integrate.(v,[σ]);
+    (v1-m/2)'*inv(W+1e-4I)*(v2-m/2)
 end
 k11 = subs(k, ([x1;u1;x2;u2] .=> [x1;u1;x1;u1])...)
 k12 = subs(k, ([x1;u1;x2;u2] .=> [x1;u1;x2;u2])...)
