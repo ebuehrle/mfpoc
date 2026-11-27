@@ -141,7 +141,7 @@ for f0 in F0
             D[1:300:end,"vx"]/3*25, D[1:300:end,"vy"]/3*25,
             style="-stealth, no markers, blue",
         );
-        [Plots.Linear(vehicle(25*x0...,5,2), style="brown, no markers, solid") for x0 in eachrow(X0[:,["x","y","vx","vy"]]) .|> collect];
+        [Plots.Linear(vehicle(25*x0...,5,2), style="orange, no markers, solid") for x0 in eachrow(X0[:,["x","y","vx","vy"]]) .|> collect];
         [Plots.Linear(vehicle(25*m...,5,2), style="red, no markers, solid") for m in eachcol(μT)];
         [Plots.Linear(vehicle(25*xt...,5,2), style="green, no markers, solid") for xt in eachrow(XT[:,["x","y","vx","vy"]]) .|> collect];
         [Plots.Linear(m*25, style="white, no markers, solid") for m in map_ways]
