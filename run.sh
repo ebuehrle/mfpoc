@@ -1,4 +1,7 @@
 julia --project mean.jl  1
+julia --project mean.jl 11
+julia --project mean.jl 21
+julia --project mean.jl 1990 # frame 2155
 julia --project mean.jl  2
 julia --project mean.jl  3
 julia --project mean.jl  4
@@ -8,7 +11,6 @@ julia --project mean.jl  7
 julia --project mean.jl  8
 julia --project mean.jl  9
 julia --project mean.jl 10
-julia --project mean.jl 11
 julia --project mean.jl 12
 julia --project mean.jl 13
 julia --project mean.jl 14
@@ -18,7 +20,6 @@ julia --project mean.jl 17
 julia --project mean.jl 18
 julia --project mean.jl 19
 julia --project mean.jl 20
-julia --project mean.jl 21
 julia --project mean.jl 22
 julia --project mean.jl 23
 julia --project mean.jl 24
