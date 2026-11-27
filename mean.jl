@@ -113,8 +113,8 @@ for f0 in F0
     save("mean-f$(f0).pdf", Axis([
         Plots.Image((x,y) -> sum(1/qi(x/25,y/25) for qi in q), (-25,25), (-25,25));
         Plots.Quiver(
-            D[1:50:end,"x"]*25,    D[1:50:end,"y"]*25,
-            D[1:50:end,"vx"]/3*25, D[1:50:end,"vy"]/3*25,
+            D[1:150:end,"x"]*25,    D[1:150:end,"y"]*25,
+            D[1:150:end,"vx"]/3*25, D[1:150:end,"vy"]/3*25,
             style="-stealth, no markers, blue",
         );
         [Plots.Linear(vehicle(25*x0...,5,2), style="brown, no markers, solid") for x0 in eachrow(X0[:,["x","y","vx","vy"]]) .|> collect];
