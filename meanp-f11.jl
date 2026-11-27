@@ -54,13 +54,13 @@ k22 = subs(k, ([x1;u1;x2;u2] .=> [x2;u2;x2;u2])...)
 l = k11 + k12 + k21 + k22
 
 F0 = frames[1:100]
-farg = parse(Int, ARGS[1])
+farg = 11
 F0 = F0[farg:farg]
 
 for f0 in F0
 
     X0 = filter(e -> e["frame_id"] == f0, D)
-    X0[2,"y"] += 0.2
+    X0[1,"x"] += 0.2
     N = size(X0,1)
 
     p = GMPModel(Mosek.Optimizer)
@@ -97,7 +97,7 @@ for f0 in F0
             D[1:50:end,"vx"]/3*20, D[1:50:end,"vy"]/3*20,
             style="-stealth, no markers, blue",
         );
-        [Plots.Linear(vehicle(20*x0...,5,2), style="brown, no markers, solid") for x0 in eachrow(X0[:,["x","y","vx","vy"]]) .|> collect];
+        [Plots.Linear(vehicle(20*x0...,5,2), style="orange, no markers, solid") for x0 in eachrow(X0[:,["x","y","vx","vy"]]) .|> collect];
         [Plots.Linear(vehicle(20*m...,5,2), style="red, no markers, solid") for m in eachcol(μT)];
         [Plots.Linear(vehicle(20*xt...,5,2), style="green, no markers, solid") for xt in eachrow(XT[:,["x","y","vx","vy"]]) .|> collect];
         [Plots.Linear(m*20, style="white, no markers, solid") for m in map_ways]
