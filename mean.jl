@@ -24,12 +24,12 @@ map_ways = XML.read("DR_DEU_Roundabout_OF.osm_xy", Node) |>
     (w -> filter(e -> e.tag == "nd", w.children)) .|>
     (w -> stack(map_node[n["ref"]] for n in w)) .|>
     (w -> w .- [1000, 1000]) .|>
-    (w -> w ./ 20)
+    (w -> w ./ 25)
 
 D = CSV.read("vehicle_tracks_000.csv", DataFrame) |>
     (d -> d[:,["frame_id","track_id","x","y","vx","vy"]]) |>
     (d -> d .- [0 0 1000 1000 0 0]) |>
-    (d -> d ./ [1 1 20 20 20 20]) |>
+    (d -> d ./ [1 1 25 25 25 25]) |>
     (d -> filter(e -> -1 <= e["x"] <= 1, d)) |>
     (d -> filter(e -> -1 <= e["y"] <= 1, d))
 
@@ -53,9 +53,9 @@ k21 = subs(k, ([x1;u1;x2;u2] .=> [x2;u2;x1;u1])...)
 k22 = subs(k, ([x1;u1;x2;u2] .=> [x2;u2;x2;u2])...)
 l = k11 + k12 + k21 + k22
 
-F0 = frames[350:end]
-# farg = parse(Int, ARGS[1])
-# F0 = F0[farg:farg]
+F0 = frames
+farg = parse(Int, ARGS[1])
+F0 = F0[farg:farg]
 
 for f0 in F0
 
@@ -93,16 +93,16 @@ for f0 in F0
     XT = filter(e -> e["frame_id"] == fT && e["track_id"] in collect(X0[:,"track_id"]), D)
 
     save("mean-f$(f0).pdf", Axis([
-        Plots.Image((x,y) -> sum(1/qi(x/20,y/20) for qi in q), (-20,20), (-20,20));
+        Plots.Image((x,y) -> sum(1/qi(x/25,y/25) for qi in q), (-25,25), (-25,25));
         Plots.Quiver(
-            D[1:50:end,"x"]*20,    D[1:50:end,"y"]*20,
-            D[1:50:end,"vx"]/3*20, D[1:50:end,"vy"]/3*20,
+            D[1:50:end,"x"]*25,    D[1:50:end,"y"]*25,
+            D[1:50:end,"vx"]/3*25, D[1:50:end,"vy"]/3*25,
             style="-stealth, no markers, blue",
         );
-        [Plots.Linear(vehicle(20*x0...,5,2), style="brown, no markers, solid") for x0 in eachrow(X0[:,["x","y","vx","vy"]]) .|> collect];
-        [Plots.Linear(vehicle(20*m...,5,2), style="red, no markers, solid") for m in eachcol(μT)];
-        [Plots.Linear(vehicle(20*xt...,5,2), style="green, no markers, solid") for xt in eachrow(XT[:,["x","y","vx","vy"]]) .|> collect];
-        [Plots.Linear(m*20, style="white, no markers, solid") for m in map_ways]
-    ], xmin=-20, xmax=20, ymin=-20, ymax=20, xlabel="Easting (m)", ylabel="Northing (m)", style="colorbar style={title=Density}"))
+        [Plots.Linear(vehicle(25*x0...,5,2), style="brown, no markers, solid") for x0 in eachrow(X0[:,["x","y","vx","vy"]]) .|> collect];
+        [Plots.Linear(vehicle(25*m...,5,2), style="red, no markers, solid") for m in eachcol(μT)];
+        [Plots.Linear(vehicle(25*xt...,5,2), style="green, no markers, solid") for xt in eachrow(XT[:,["x","y","vx","vy"]]) .|> collect];
+        [Plots.Linear(m*25, style="white, no markers, solid") for m in map_ways]
+    ], xmin=-25, xmax=25, ymin=-25, ymax=25, xlabel="Easting (m)", ylabel="Northing (m)", style="colorbar style={title=Density}"))
 
 end
